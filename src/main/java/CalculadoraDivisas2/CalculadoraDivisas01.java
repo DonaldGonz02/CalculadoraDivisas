@@ -27,8 +27,10 @@ public class CalculadoraDivisas01 extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     
-    public String toDivisa(double cantidad, String moneda){
-        return "Resultado: "+Math.round(cantidad*100.0)/100.0+" "+moneda;                
+    public String aMoneda(double cantidad, String moneda){
+        return "Resultado: "+Math.round(cantidad*100.0)/100.0+" "+moneda;
+        
+                
     }
 
     /**
@@ -181,7 +183,7 @@ public class CalculadoraDivisas01 extends javax.swing.JFrame {
         DecimalFormat xd = new DecimalFormat("#.00");
         cant=Double.parseDouble(CantImport.getText());
         Convertiner();
-        ConverView.setText(String.valueOf("Resultado: "+xd.format(convers)));
+        ConvertView.setText(String.valueOf("Resultado: "+xd.format(convers)));
         
     }//GEN-LAST:event_bConvertActionPerformed
 
@@ -264,7 +266,7 @@ public class CalculadoraDivisas01 extends javax.swing.JFrame {
                 break;
             }
         }
-        ConverView.setText(toDivisa(convers, to));
+        ConverView.setText(aMoneda(cant, from)+"="+aMoneda(convers, to));
     }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
