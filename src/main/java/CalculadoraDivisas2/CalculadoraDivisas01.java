@@ -203,7 +203,7 @@ public class CalculadoraDivisas01 extends javax.swing.JFrame {
         switch(from){
             case "GTQ":{
                 if(to.equals("USD$")){
-                    convers=cant*7.67;
+                    convers=cant*0.13;
                 }
                 else if(to.equals("EUR")){
                     convers=cant*0.12;
