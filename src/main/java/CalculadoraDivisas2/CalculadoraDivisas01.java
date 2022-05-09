@@ -4,17 +4,31 @@
  */
 package CalculadoraDivisas2;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.text.DecimalFormat;
+
 /**
  *
  * @author alumno
  */
 public class CalculadoraDivisas01 extends javax.swing.JFrame {
-
-    /**
-     * Creates new form CalculadoraDivisas01
-     */
+    
+    //variables
+    Double cant =0.0;
+    Double convers=0.0;
+    String from = "GTQ";
+    String to = "GTQ";
+    
     public CalculadoraDivisas01() {
         initComponents();
+        this.setTitle("Conversor de Divisas");
+   
+        this.setLocationRelativeTo(null);
+    }
+    
+    public String toDivisa(double cantidad, String moneda){
+        return "Resultado: "+Math.round(cantidad*100.0)/100.0+" "+moneda;                
     }
 
     /**
@@ -27,60 +41,69 @@ public class CalculadoraDivisas01 extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        CantImport = new javax.swing.JTextField();
+        cb2 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        cb1 = new javax.swing.JComboBox<>();
+        bConvert = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        ConverView = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
         jLabel1.setText("Introduce importe:");
 
-        jTextField1.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
-
-        jComboBox1.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GTQ ", "USD", "EUR", "PESO MX" }));
-        jComboBox1.setSelectedItem("Moneda");
-        jComboBox1.setToolTipText("Moneda");
-        jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        CantImport.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
+        CantImport.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                CantImportCaretUpdate(evt);
+            }
+        });
+        CantImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                CantImportActionPerformed(evt);
+            }
+        });
+
+        cb2.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
+        cb2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GTQ ", "USD$", "EUR", "MXN$" }));
+        cb2.setSelectedItem("Moneda");
+        cb2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cb2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb2ActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
         jLabel2.setText("Convertir a:");
 
-        jComboBox2.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GTQ ", "USD", "EUR", "PESO MX" }));
-        jComboBox2.setSelectedItem("Moneda");
-        jComboBox2.setToolTipText("Moneda");
-        jComboBox2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        cb1.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
+        cb1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GTQ ", "USD$", "EUR", "MXN$" }));
+        cb1.setSelectedItem("Moneda");
+        cb1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cb1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                cb1ActionPerformed(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
-        jButton1.setText("Convertir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bConvert.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
+        bConvert.setText("Convertir");
+        bConvert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bConvertActionPerformed(evt);
             }
         });
+
+        ConverView.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
+        ConverView.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1))
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,18 +115,24 @@ public class CalculadoraDivisas01 extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1))
+                                    .addComponent(CantImport))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(cb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bConvert)
                         .addGap(46, 46, 46))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ConverView, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(211, Short.MAX_VALUE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(247, Short.MAX_VALUE)
+                    .addComponent(cb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(38, 38, 38)))
         );
         layout.setVerticalGroup(
@@ -112,20 +141,22 @@ public class CalculadoraDivisas01 extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addComponent(CantImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bConvert)
+                        .addComponent(cb2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addComponent(ConverView, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(52, 52, 52)
-                    .addComponent(jComboBox2)
+                    .addComponent(cb1)
                     .addGap(220, 220, 220)))
         );
 
@@ -133,21 +164,108 @@ public class CalculadoraDivisas01 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cb2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        to=cb2.getSelectedItem().toString();
+        Convertiner();
+    }//GEN-LAST:event_cb2ActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void cb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+        from=cb1.getSelectedItem().toString();
+        Convertiner();
+    }//GEN-LAST:event_cb1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bConvertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConvertActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        DecimalFormat xd = new DecimalFormat("#.00");
+        cant=Double.parseDouble(CantImport.getText());
+        Convertiner();
+        ConverView.setText(String.valueOf("Resultado: "+xd.format(convers)));
+        
+    }//GEN-LAST:event_bConvertActionPerformed
+
+    private void CantImportCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_CantImportCaretUpdate
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CantImportCaretUpdate
+
+    private void CantImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CantImportActionPerformed
+        // TODO add your handling code here:
+         
+    }//GEN-LAST:event_CantImportActionPerformed
 
     /**
      * @param args the command line arguments
      */
+    public void Convertiner(){
+        switch(from){
+            case "GTQ":{
+                if(to.equals("USD$")){
+                    convers=cant*7.67;
+                }
+                else if(to.equals("EUR")){
+                    convers=cant*0.12;
+                }
+                else if(to.equals("MXN$")){
+                    convers=cant*2.67;
+                }
+                
+                else{//GTQ
+                    convers=cant;
+                }
+                break;
+            }
+            case"USD$":{
+                if(to.equals("GTQ")){
+                    convers=cant*7.67;
+                }
+                else if(to.equals("EUR")){
+                    convers=cant*0.95;
+                }
+                else if(to.equals("MXN$")){
+                    convers=cant*20.43;
+                }
+                
+                else{//USD$
+                    convers=cant;
+                }
+                break;
+            }
+            case"EUR":{
+                if(to.equals("GTQ")){
+                    convers=cant*8.07;
+                }
+                else if(to.equals("USD$")){
+                    convers=cant*1.05;
+                }
+                else if(to.equals("MXN$")){
+                    convers=cant*21.50;
+                }
+                
+                else{//EUR
+                    convers=cant;
+                }
+                break;
+            }
+            case"MXN$":{
+                if(to.equals("GTQ")){
+                    convers=cant*0.38;
+                }
+                else if(to.equals("USD$")){
+                    convers=cant*0.049;
+                }
+                else if(to.equals("EUR")){
+                    convers=cant*0.047;
+                }
+                
+                else{//MXN$
+                    convers=cant;
+                }
+                break;
+            }
+        }
+        ConverView.setText(toDivisa(convers, to));
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -181,12 +299,13 @@ public class CalculadoraDivisas01 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JTextField CantImport;
+    private javax.swing.JLabel ConverView;
+    private javax.swing.JButton bConvert;
+    private javax.swing.JComboBox<String> cb1;
+    private javax.swing.JComboBox<String> cb2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-}
+    }
